@@ -6,9 +6,29 @@
         <div class="card-body">
             <div class="card-text" style="white-space: pre-line;" th:text="${article.content}"></div>
             <div class="d-flex justify-content-end">
+                <div th:if="${article.modifyDate != null}" class="badge bg-light text-dark p-2 text-start mx-3">
+                    <div class="mb-2">modified at</div>
+                    <div th:text="${#temporals.format(article.modifyDate, 'yyyy-MM-dd HH:mm')}"></div>
+                </div>
                 <div class="badge bg-light text-dark p-2 text-start">
                     <div th:text="${#temporals.format(article.createDate, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
+            </div>
+            <div class="my-3">
+                <a onclick="return confirm('정말 추천하시겠습니까?')"
+                   class="recommend btn btn-sm btn-outline-secondary"
+                   th:href="@{|/article/vote/${article.id}|}">
+                    추천
+                    <span class="badge rounded-pill bg-success" th:text="${#lists.size(article.voter)}"></span>
+                </a>
+                <a th:href="@{|/article/modify/${article.id}|}" class="btn btn-sm btn-outline-secondary"
+                   sec:authorize="isAuthenticated()"
+                   th:if="${article.author != null and #authentication.getPrincipal().getUsername() == article.author.username}"
+                   th:text="수정"></a>
+                <a onclick="return confirm('정말 삭제하시겠습니까?')"  th:href="@{|/article/delete/${article.id}|}"
+                   class="delete btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()"
+                   th:if="${article.author != null and #authentication.getPrincipal().getUsername() == article.author.username}"
+                   th:text="삭제"></a>
             </div>
         </div>
     </div>
