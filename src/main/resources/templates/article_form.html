@@ -12,7 +12,10 @@
             <label for="content" class="form-label">내용</label>
             <textarea th:field="*{content}" class="form-control" rows="10"></textarea>
         </div>
-        <input type="submit" value="저장하기" class="btn btn-primary my-2">
+        <div class="d-flex justify-content-between my-2">
+            <input type="submit" value="저장하기" class="btn btn-primary my-2">
+            <a th:href="@{/article/list}" class="btn btn-primary my-2">질문목록</a>
+        </div>
     </form>
 </div>
 </html>
